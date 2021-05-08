@@ -27,3 +27,5 @@ local.properties
 .loadpath
 .factorypath
 Servers/
+**/.DS_Store
+**/target/**
