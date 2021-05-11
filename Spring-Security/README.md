@@ -19,4 +19,4 @@
 
 - Override the configure(HttpSecurity http) method
 - Develop a controller to show the custom login form.
-- Create custom login form.
+- Create a custom login form.
