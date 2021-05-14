@@ -59,3 +59,18 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
 
 - Spring security provides JSP custom tags for accessing user id and roles.
 - Add the springsecurity JSP tag library and use it in jsp page.
+
+## Restrict Access Based on Role
+
+- To restricting access to Roles -
+
+  ```
+    antMatchers(<<add path to match on>>).hasRole(<< authorised role >>);
+    antMatchers(<<add path to match on>>).hasAnyRole(<< list of authorised roles>>);
+  ```
+
+  1.) When user has a role of ADMIN , Spring automagically allows that user to access static resources. For other roles, requests for static resources will fail. To fix, add this config: antMatchers("/resources/\*\*").permitAll()
+
+  2.) For role-based restrictions to work, omit this security config: .anyRequest().authenticated()
+
+  3.) To help with debugging security, you can use this on the config class: @EnableWebSecurity(debug = true)

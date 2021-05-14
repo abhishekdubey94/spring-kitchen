@@ -11,7 +11,21 @@
 	<br>
 	Role: <security:authentication property="principal.authorities"/>
 	<br>
-	
+	 <hr>
+	 <!-- Add a link to point to /leaders ... this is for the managers  -->
+	 <p>
+	 	<a href="${pageContext.request.contextPath }/leaders">Leadership Meeting</a>
+	 	(Only for managers)
+	 </p>
+	 <hr>
+	  <hr>
+	 <!-- Add a link to point to /systems ... this is for the Admins  -->
+	 <p>
+	 	<a href="${pageContext.request.contextPath }/systems">IT Systems Meeting</a>
+	 	(Only for ADMINS)
+	 </p>
+	 <hr>
+	 
 	Weclome to home page
 	<p>
 		<form:form action="${pageContext.request.contextPath }/logout"
