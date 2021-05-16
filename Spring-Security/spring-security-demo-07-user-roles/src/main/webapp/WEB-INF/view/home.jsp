@@ -13,11 +13,14 @@
 	<br>
 	 <hr>
 	 <!-- Add a link to point to /leaders ... this is for the managers  -->
+	 <security:authorize access="hasRole('MANAGER')">
 	 <p>
 	 	<a href="${pageContext.request.contextPath }/leaders">Leadership Meeting</a>
 	 	(Only for managers)
 	 </p>
 	 <hr>
+	 </security:authorize>
+	 <security:authorize access="hasRole('ADMIN')">
 	  <hr>
 	 <!-- Add a link to point to /systems ... this is for the Admins  -->
 	 <p>
@@ -26,6 +29,7 @@
 	 </p>
 	 <hr>
 	 
+	 </security:authorize>
 	Weclome to home page
 	<p>
 		<form:form action="${pageContext.request.contextPath }/logout"

@@ -74,3 +74,11 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
   2.) For role-based restrictions to work, omit this security config: .anyRequest().authenticated()
 
   3.) To help with debugging security, you can use this on the config class: @EnableWebSecurity(debug = true)
+
+## Access Denied Page
+
+- Add .exceptionHandling.accessDeniedPage("/access-denied");
+
+## Contents based in Role
+
+- Add security tag, < security : authorize access="hasRole('ADMIN')">
