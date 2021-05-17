@@ -82,3 +82,39 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
 ## Contents based in Role
 
 - Add security tag, < security : authorize access="hasRole('ADMIN')">
+
+## Database Support in Spring Security
+
+- By default, we have to follow Spring Security predefined table schemas.
+- We can have custom table, but then we have to rewrite the low level JDBC codes.
+
+  ### Steps:
+
+1. Develop SQL Script to set up database tables. - We should have 2 tables with name users and authorities.
+
+   ```
+     CREATE TABLE 'users' (
+       'username' varchar(50) NOT NULL,
+       'password' varchar(50) NOT NULL,
+       'enabled' tinyint(1) NOT NULL
+       PRIMARY KEY('username')
+     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+
+     CREATE TABLE 'authorities' (
+       'username' varchar(50) NOT NULL,
+       'authority' varchar(50) NOT NULL,
+
+       UNIQUE KEY 'authorities_idx_1('username','authority'),
+       CONSTRAINT 'authorities_ibfk_1'
+       REFERNECS 'users' ('username')
+     ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+   ```
+
+   - Spring Security 5, passwords are stored using specific format { id }encodedPassword. noop - plain text,bcrypt - BCrypt password encrypting
+
+2. Add database support in Maven POM file.
+3. Create JDBC properties file.
+4. Define DataSource in Spring Configuration.
+5. Update Spring Security Configuration to use JDBC.
