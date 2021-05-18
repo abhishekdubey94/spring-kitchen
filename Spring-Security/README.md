@@ -115,6 +115,44 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
    - Spring Security 5, passwords are stored using specific format { id }encodedPassword. noop - plain text,bcrypt - BCrypt password encrypting
 
 2. Add database support in Maven POM file.
+
+   ```
+   <!-- Add MySQL and C3P0 Support  -->
+       <dependency>
+         <groupId>mysql</groupId>
+         <artifactId>mysql-connector-java</artifactId>
+         <version>5.1.45</version>
+       </dependency>
+
+       <dependency>
+         <groupId>com.mchange</groupId>
+         <artifactId>c3p0</artifactId>
+         <version>0.9.5.2</version>
+       </dependency>
+   ```
+
 3. Create JDBC properties file.
+
+   ```
+    #
+    # JDBC connection properties
+    #
+    jdbc.driver=com.mysql.jdbc.Driver
+    jdbc.url=jdbc:mysql://localhost:3306/spring_security_demo_plaintext?useSSL=false
+    jdbc.user=springstudent
+    jdbc.password=springstudent
+
+    #
+    #Connection pool properties
+    #
+    connection.pool.initialPoolSize=5
+    connection.pool.minPoolSize=5
+    connection.pool.maxPoolSize=20
+    connection.pool.maxIdleTime=3000
+   ```
+
+```
+
 4. Define DataSource in Spring Configuration.
 5. Update Spring Security Configuration to use JDBC.
+```
