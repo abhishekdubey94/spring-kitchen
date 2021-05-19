@@ -113,6 +113,7 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
    ```
 
    - Spring Security 5, passwords are stored using specific format { id }encodedPassword. noop - plain text,bcrypt - BCrypt password encrypting
+   - For bcrypt, make the size of the password as 68 char, { bcrypt } ->8char and encoded password --> 60 char
 
 2. Add database support in Maven POM file.
 
@@ -151,8 +152,43 @@ https://www.javadevjournal.com/spring-security/spring-security-logout/
     connection.pool.maxIdleTime=3000
    ```
 
-```
+4. Define DataSource in Spring Configuration i.e AppConfig
 
-4. Define DataSource in Spring Configuration.
+   ```
+     @Bean
+   public DataSource securityDataSource() {
+   	// create a connection pool
+   	ComboPooledDataSource securityDataSource = new ComboPooledDataSource();
+
+   	// set the jdbc driver class
+   	try {
+   		securityDataSource.setDriverClass(env.getProperty("jdbc.driver"));
+   	} catch (PropertyVetoException exc) {
+   		throw new RuntimeException();
+   	}
+
+   	// set database connection props
+   	securityDataSource.setJdbcUrl(env.getProperty("jdbc.url"));
+   	securityDataSource.setUser(env.getProperty("jdbc.user"));
+   	securityDataSource.setPassword(env.getProperty("jdbc.password"));
+
+   	// set connection pool props
+   	securityDataSource.setInitialPoolSize(getIntProperty("connection.pool.initialPoolSize"));
+   	securityDataSource.setMaxPoolSize(getIntProperty("connection.pool.maxPoolSize"));
+   	securityDataSource.setMinPoolSize(getIntProperty("connection.pool.minPoolSize"));
+   	securityDataSource.setMaxIdleTime(getIntProperty("connection.pool.maxIdleTime"));
+
+   	return securityDataSource;
+   }
+   ```
+
 5. Update Spring Security Configuration to use JDBC.
-```
+
+   ```
+      @Override
+   protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+
+   	// use jdbc authentication
+   	auth.jdbcAuthentication().dataSource(securityDataSource);
+   }
+   ```
